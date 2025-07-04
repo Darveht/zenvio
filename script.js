@@ -70,9 +70,18 @@ class Zenvio {
     setupIntro() {
         const introScreen = document.getElementById('intro-screen');
         const app = document.getElementById('app');
+        const introAudio = document.getElementById('intro-audio');
+
+        // Reproducir audio del intro
+        setTimeout(() => {
+            introAudio.play().catch(e => {
+                console.log('Audio autoplay blocked:', e);
+            });
+        }, 500);
 
         // Después de 4 segundos, ocultar intro y mostrar app
         setTimeout(() => {
+            introAudio.pause();
             introScreen.style.display = 'none';
             app.classList.remove('hidden');
         }, 4000);

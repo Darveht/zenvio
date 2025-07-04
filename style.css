@@ -224,33 +224,7 @@ body {
     display: flex;
     gap: 12px;
     align-items: center;
-}
-
-.btn-collaborate {
-    padding: 8px 16px;
-    background: transparent;
-    border: 1px solid var(--uber-green);
-    color: var(--uber-green);
-    border-radius: var(--border-radius);
-    cursor: pointer;
-    transition: var(--transition);
-    font-weight: 500;
-}
-
-.btn-collaborate:hover {
-    background: var(--uber-green);
-    color: var(--uber-black);
-}
-
-.btn-profile {
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    background: var(--uber-green);
-    color: var(--uber-black);
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
+    min-width: 50px; /* Mantener espacio del header */
 }
 
 /* Main Content */
@@ -545,19 +519,21 @@ body {
 }
 
 .preview-controls {
-    height: 60px;
-    background: var(--uber-gray);
+    height: 70px;
+    background: linear-gradient(135deg, var(--uber-gray) 0%, var(--uber-dark) 100%);
     display: flex;
     align-items: center;
-    padding: 0 16px;
-    gap: 16px;
+    padding: 0 20px;
+    gap: 20px;
+    border-top: 1px solid var(--uber-light-gray);
+    backdrop-filter: blur(10px);
 }
 
 .play-btn {
-    width: 40px;
-    height: 40px;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
-    background: var(--uber-green);
+    background: linear-gradient(135deg, var(--uber-green), var(--uber-green-hover));
     border: none;
     cursor: pointer;
     display: flex;
@@ -565,11 +541,13 @@ body {
     justify-content: center;
     color: var(--uber-black);
     transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(0, 255, 127, 0.3);
 }
 
 .play-btn:hover {
-    background: var(--uber-green-hover);
-    transform: scale(1.1);
+    background: linear-gradient(135deg, var(--uber-green-hover), var(--uber-green));
+    transform: scale(1.15);
+    box-shadow: 0 6px 24px rgba(0, 255, 127, 0.5);
 }
 
 .play-btn svg {
@@ -616,44 +594,63 @@ body {
 .volume-control {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 12px;
+    background: rgba(45, 45, 45, 0.8);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid var(--uber-gray);
 }
 
 .volume-btn {
-    width: 32px;
-    height: 32px;
-    background: transparent;
+    width: 36px;
+    height: 36px;
+    background: var(--uber-green);
     border: none;
-    color: var(--uber-white);
+    color: var(--uber-black);
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
+    border-radius: 50%;
     transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(0, 255, 127, 0.3);
 }
 
 .volume-btn:hover {
-    background: var(--uber-gray);
-    color: var(--uber-green);
+    background: var(--uber-green-hover);
+    transform: scale(1.1);
+    box-shadow: 0 4px 16px rgba(0, 255, 127, 0.4);
 }
 
 .volume-slider {
-    width: 60px;
-    height: 4px;
+    width: 80px;
+    height: 6px;
     background: var(--uber-light-gray);
-    border-radius: 2px;
+    border-radius: 3px;
     outline: none;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.volume-slider:hover {
+    background: var(--uber-gray);
 }
 
 .volume-slider::-webkit-slider-thumb {
     appearance: none;
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
     background: var(--uber-green);
     border-radius: 50%;
     cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.volume-slider::-webkit-slider-thumb:hover {
+    width: 18px;
+    height: 18px;
+    box-shadow: 0 0 10px rgba(0, 255, 127, 0.6);
 }
 
 .fullscreen-btn {
@@ -2177,6 +2174,7 @@ body {
 
     .header-actions {
         gap: 8px;
+        display: none; /* Ocultar en móvil ya que no hay contenido */
     }
 
     .btn-collaborate {
