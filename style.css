@@ -231,6 +231,7 @@ body {
 .main-content {
     flex: 1;
     overflow: hidden;
+    padding-bottom: 70px; /* Espacio para la barra inferior */
 }
 
 .section {
@@ -2130,6 +2131,109 @@ body {
     }
 }
 
+/* Bottom Toolbar */
+.bottom-toolbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 70px;
+    background: linear-gradient(135deg, var(--uber-dark) 0%, var(--uber-gray) 100%);
+    border-top: 1px solid var(--uber-light-gray);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 0 24px;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.toolbar-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: transparent;
+    border: none;
+    color: var(--uber-text-gray);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    padding: 8px 16px;
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+.toolbar-btn:hover {
+    color: var(--uber-white);
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.toolbar-btn.create-btn {
+    background: linear-gradient(135deg, var(--uber-green), var(--uber-green-hover));
+    color: var(--uber-black);
+    box-shadow: 0 4px 16px rgba(0, 255, 127, 0.3);
+    animation: createPulse 3s ease-in-out infinite;
+}
+
+.toolbar-btn.create-btn:hover {
+    background: linear-gradient(135deg, var(--uber-green-hover), var(--uber-green));
+    color: var(--uber-black);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 255, 127, 0.5);
+}
+
+.toolbar-btn.create-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.toolbar-btn.create-btn:hover::before {
+    left: 100%;
+}
+
+.toolbar-icon {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.toolbar-btn:hover .toolbar-icon {
+    transform: scale(1.1);
+}
+
+.toolbar-label {
+    font-size: 12px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.toolbar-btn:hover .toolbar-label {
+    font-weight: 600;
+}
+
+@keyframes createPulse {
+    0%, 100% {
+        box-shadow: 0 4px 16px rgba(0, 255, 127, 0.3);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(0, 255, 127, 0.5);
+    }
+}
+
 /* Utility Classes */
 .hidden {
     display: none !important;
@@ -2189,13 +2293,39 @@ body {
     }
 
     .main-content {
-        height: calc(100vh - 70px);
+        height: calc(100vh - 120px); /* Header + Bottom toolbar */
     }
 
     .section {
         padding: 16px 12px;
-        height: calc(100vh - 70px);
+        height: calc(100vh - 120px);
         overflow-y: auto;
+    }
+
+    /* Bottom Toolbar Mobile */
+    .bottom-toolbar {
+        height: 60px;
+        gap: 16px;
+        padding: 0 12px;
+    }
+
+    .toolbar-btn {
+        padding: 6px 12px;
+        gap: 4px;
+    }
+
+    .toolbar-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .toolbar-icon svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .toolbar-label {
+        font-size: 10px;
     }
 
     /* Import Section Mobile */

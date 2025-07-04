@@ -295,6 +295,12 @@ class Zenvio {
         document.querySelectorAll('.tool-btn').forEach(btn => {
             btn.addEventListener('click', (e) => this.handleAdvancedTool(e.currentTarget.dataset.tool));
         });
+
+        // Bottom toolbar
+        document.getElementById('create-btn').addEventListener('click', () => this.handleCreateProject());
+        document.getElementById('projects-btn').addEventListener('click', () => this.handleProjects());
+        document.getElementById('templates-btn').addEventListener('click', () => this.handleTemplates());
+        document.getElementById('help-btn').addEventListener('click', () => this.handleHelp());
     }
 
     setupDragAndDrop() {
@@ -771,8 +777,14 @@ class Zenvio {
 
         this.previewMedia(mediaItem);
 
+        // Cambiar automáticamente a la sección de edición
         this.switchSection('edit');
-        this.showNotification(`${mediaItem.name} añadido a la línea de tiempo`);
+        
+        // Mostrar notificación de éxito con mejor feedback
+        this.showSuccessNotification(`${mediaItem.name} añadido a la línea de tiempo`, {
+            subtitle: 'Ya puedes comenzar a editar tu video',
+            duration: 4000
+        });
     }
 
     previewMedia(mediaItem) {
@@ -2187,6 +2199,67 @@ class Zenvio {
         }
         
         this.showNotification(`Color de fondo cambiado a ${hexColor}`);
+    }
+
+    // Bottom Toolbar Handlers
+    handleCreateProject() {
+        // Cambiar automáticamente a la sección de importación primero
+        this.switchSection('import');
+        
+        // Mostrar animación de bienvenida
+        this.showCreateProjectAnimation();
+        
+        // Mostrar notificación guía
+        this.showInfoNotification('¡Comencemos a crear!', {
+            subtitle: 'Arrastra tus videos aquí o haz clic para seleccionar',
+            duration: 6000
+        });
+    }
+
+    handleProjects() {
+        this.showInfoNotification('Proyectos', {
+            subtitle: 'Función en desarrollo - Próximamente podrás ver todos tus proyectos',
+            duration: 4000
+        });
+    }
+
+    handleTemplates() {
+        this.showInfoNotification('Plantillas', {
+            subtitle: 'Próximamente: Plantillas prediseñadas para tus videos',
+            duration: 4000
+        });
+    }
+
+    handleHelp() {
+        this.showInfoNotification('Centro de Ayuda', {
+            subtitle: 'Consejos: Usa Ctrl+Space para reproducir/pausar, Ctrl+S para guardar',
+            duration: 6000
+        });
+    }
+
+    showCreateProjectAnimation() {
+        const dropZone = document.querySelector('.drop-zone');
+        const createBtn = document.getElementById('create-btn');
+        
+        // Animar el botón crear
+        createBtn.style.transform = 'scale(1.2)';
+        createBtn.style.boxShadow = '0 8px 32px rgba(0, 255, 127, 0.6)';
+        
+        setTimeout(() => {
+            createBtn.style.transform = 'translateY(-4px)';
+            createBtn.style.boxShadow = '0 8px 24px rgba(0, 255, 127, 0.5)';
+        }, 300);
+        
+        // Animar la zona de arrastre
+        dropZone.style.borderColor = 'var(--uber-green)';
+        dropZone.style.background = 'rgba(0, 255, 127, 0.1)';
+        dropZone.style.transform = 'scale(1.02)';
+        
+        setTimeout(() => {
+            dropZone.style.borderColor = 'var(--uber-gray)';
+            dropZone.style.background = 'transparent';
+            dropZone.style.transform = 'scale(1)';
+        }, 2000);
     }
 }
 
