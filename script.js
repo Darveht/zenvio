@@ -90,6 +90,9 @@ class Zenvio {
         const volumeSlider = document.getElementById('volume-slider');
         const fullscreenBtn = document.getElementById('fullscreen-btn');
 
+        // Detectar dispositivo móvil
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
         // Play/Pause
         const togglePlay = () => {
             if (!video.src) return;
@@ -177,19 +180,44 @@ class Zenvio {
             playOverlay.style.opacity = '1';
         });
 
-        // Show/hide overlay on hover
+        // Show/hide overlay on hover (solo desktop)
         const videoContainer = document.querySelector('.custom-video-player');
-        videoContainer.addEventListener('mouseenter', () => {
-            if (video.paused) {
-                playOverlay.style.opacity = '1';
-            }
-        });
+        
+        if (!isMobile) {
+            videoContainer.addEventListener('mouseenter', () => {
+                if (video.paused) {
+                    playOverlay.style.opacity = '1';
+                }
+            });
 
-        videoContainer.addEventListener('mouseleave', () => {
-            if (!video.paused) {
-                playOverlay.style.opacity = '0';
-            }
-        });
+            videoContainer.addEventListener('mouseleave', () => {
+                if (!video.paused) {
+                    playOverlay.style.opacity = '0';
+                }
+            });
+        } else {
+            // En móviles, mantener overlay visible cuando esté pausado
+            playOverlay.style.opacity = '1';
+            
+            // Ocultar controles después de 3 segundos en reproducción
+            let hideControlsTimeout;
+            const hideControls = () => {
+                if (!video.paused) {
+                    playOverlay.style.opacity = '0';
+                }
+            };
+            
+            const showControls = () => {
+                playOverlay.style.opacity = '1';
+                clearTimeout(hideControlsTimeout);
+                if (!video.paused) {
+                    hideControlsTimeout = setTimeout(hideControls, 3000);
+                }
+            };
+            
+            videoContainer.addEventListener('touchstart', showControls);
+            videoContainer.addEventListener('click', showControls);
+        }
     }
 
     setupEventListeners() {
@@ -279,6 +307,110 @@ class Zenvio {
             const files = e.dataTransfer.files;
             this.handleFileSelection(files);
         }, false);
+
+        // Soporte táctil para móviles
+        this.setupTouchSupport();
+    }
+
+    setupTouchSupport() {
+        // Mejorar controles táctiles para timeline
+        const timeline = document.querySelector('.timeline');
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let isTouchDragging = false;
+        let touchDraggedClip = null;
+
+        timeline.addEventListener('touchstart', (e) => {
+            if (e.target.classList.contains('clip')) {
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                isTouchDragging = true;
+                touchDraggedClip = e.target;
+                touchDraggedClip.classList.add('dragging');
+                
+                document.querySelectorAll('.clip').forEach(clip => clip.classList.remove('selected'));
+                touchDraggedClip.classList.add('selected');
+                
+                e.preventDefault();
+            }
+        });
+
+        timeline.addEventListener('touchmove', (e) => {
+            if (isTouchDragging && touchDraggedClip) {
+                const touch = e.touches[0];
+                const deltaX = touch.clientX - touchStartX;
+                
+                const trackContent = touchDraggedClip.parentElement;
+                const trackRect = trackContent.getBoundingClientRect();
+                const currentLeft = parseInt(touchDraggedClip.style.left) || 0;
+                
+                const newX = Math.max(0, Math.min(
+                    trackContent.offsetWidth - touchDraggedClip.offsetWidth,
+                    currentLeft + deltaX
+                ));
+                
+                touchDraggedClip.style.left = newX + 'px';
+                
+                touchStartX = touch.clientX;
+                
+                const clipId = touchDraggedClip.dataset.clipId;
+                const clip = this.projectState.clips.find(c => c.id === clipId);
+                if (clip) {
+                    clip.startTime = (newX / this.zoomLevel) * 10;
+                }
+                
+                e.preventDefault();
+            }
+        });
+
+        timeline.addEventListener('touchend', (e) => {
+            if (isTouchDragging) {
+                isTouchDragging = false;
+                if (touchDraggedClip) {
+                    touchDraggedClip.classList.remove('dragging');
+                    this.updateTimelinePreview();
+                    this.saveProjectState();
+                    touchDraggedClip = null;
+                }
+            }
+        });
+
+        // Mejorar controles de progreso para móviles
+        const progressBar = document.getElementById('custom-progress-bar');
+        if (progressBar) {
+            progressBar.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+            });
+
+            progressBar.addEventListener('touchend', (e) => {
+                if (!this.currentVideo || !this.currentVideo.duration) return;
+                
+                const touch = e.changedTouches[0];
+                const rect = progressBar.getBoundingClientRect();
+                const clickX = touch.clientX - rect.left;
+                const percentage = clickX / rect.width;
+                const newTime = percentage * this.currentVideo.duration;
+                
+                this.currentVideo.currentTime = newTime;
+                e.preventDefault();
+            });
+        }
+
+        // Controles de volumen para móviles
+        const volumeSlider = document.getElementById('volume-slider');
+        if (volumeSlider) {
+            volumeSlider.addEventListener('touchmove', (e) => {
+                e.stopPropagation();
+            });
+        }
+
+        // Mejorar navegación táctil
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                this.switchSection(tab.dataset.section);
+            });
+        });
     }
 
     setupTimeline() {

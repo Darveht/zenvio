@@ -2140,8 +2140,18 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    body {
+        overflow-x: hidden;
+    }
+
     .header {
-        padding: 0 16px;
+        padding: 0 12px;
+        height: 50px;
+        flex-wrap: wrap;
+    }
+    
+    .logo {
+        font-size: 16px;
     }
     
     .logo span {
@@ -2149,30 +2159,474 @@ body {
     }
     
     .nav-tabs {
-        gap: 2px;
+        gap: 1px;
+        flex: 1;
+        justify-content: center;
+        order: 2;
+        width: 100%;
+        margin-top: 8px;
     }
     
     .nav-tab {
+        padding: 6px 8px;
+        font-size: 12px;
+        flex: 1;
+        text-align: center;
+        min-width: 0;
+    }
+
+    .header-actions {
+        gap: 8px;
+    }
+
+    .btn-collaborate {
         padding: 6px 12px;
-        font-size: 14px;
+        font-size: 12px;
     }
-    
-    .edit-workspace {
-        flex-direction: column;
-        height: auto;
+
+    .btn-profile {
+        width: 30px;
+        height: 30px;
+        font-size: 12px;
     }
-    
-    .tools-panel {
-        order: -1;
+
+    .main-content {
+        height: calc(100vh - 70px);
+    }
+
+    .section {
+        padding: 16px 12px;
+        height: calc(100vh - 70px);
+        overflow-y: auto;
+    }
+
+    /* Import Section Mobile */
+    .drop-zone {
+        padding: 24px 16px;
         margin-bottom: 16px;
     }
-    
-    .export-presets {
+
+    .drop-zone h2 {
+        font-size: 18px;
+    }
+
+    .media-grid {
         grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .media-card {
+        font-size: 12px;
+    }
+
+    .media-thumbnail {
+        height: 80px;
+    }
+
+    .media-info {
+        padding: 8px;
+    }
+
+    /* Edit Section Mobile */
+    .edit-workspace {
+        flex-direction: column;
+        height: 50vh;
+        gap: 12px;
+        margin-bottom: 12px;
     }
     
+    .preview-panel {
+        order: 2;
+        height: 40%;
+        min-height: 200px;
+    }
+
+    .tools-panel {
+        order: 1;
+        height: 60%;
+        padding: 12px;
+        margin-bottom: 0;
+        overflow-y: auto;
+    }
+
+    .tool-section {
+        margin-bottom: 20px;
+    }
+
+    .tool-section h4 {
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+
+    .effects-grid,
+    .transitions-grid,
+    .filters-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+    }
+
+    .effect-card,
+    .transition-card,
+    .filter-card {
+        padding: 6px;
+        font-size: 10px;
+    }
+
+    .effect-preview,
+    .filter-preview,
+    .transition-preview {
+        width: 40px;
+        height: 30px;
+    }
+
+    .text-tools,
+    .advanced-tools {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
+    }
+
+    .tool-btn,
+    .text-btn {
+        padding: 8px;
+        font-size: 11px;
+        gap: 4px;
+    }
+
+    .stickers-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 6px;
+    }
+
+    .sticker-card {
+        padding: 6px;
+    }
+
+    .sticker-card span {
+        font-size: 16px;
+    }
+
+    .sticker-card small {
+        font-size: 9px;
+    }
+
+    /* Timeline Mobile */
+    .timeline-container {
+        height: 50vh;
+        position: relative;
+    }
+
+    .timeline-controls {
+        height: 35px;
+        padding: 0 12px;
+        gap: 12px;
+    }
+
+    .timeline-controls button {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .zoom-level {
+        font-size: 12px;
+    }
+
+    .track {
+        height: 60px;
+    }
+
+    .track-header {
+        width: 80px;
+        padding: 0 8px;
+        font-size: 12px;
+    }
+
+    .clip {
+        height: 40px;
+        top: 10px;
+        font-size: 10px;
+        padding: 0 6px;
+    }
+
+    .playhead {
+        left: 80px;
+    }
+
+    .playhead::before {
+        width: 10px;
+        height: 10px;
+        left: -4px;
+        top: -6px;
+    }
+
+    /* Video Controls Mobile */
+    .preview-controls {
+        height: 50px;
+        padding: 0 12px;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .play-btn {
+        width: 35px;
+        height: 35px;
+    }
+
+    .progress-bar {
+        margin: 0 8px;
+        height: 4px;
+    }
+
+    .time-display {
+        font-size: 11px;
+    }
+
+    .volume-control {
+        gap: 6px;
+    }
+
+    .volume-btn,
+    .fullscreen-btn {
+        width: 28px;
+        height: 28px;
+    }
+
+    .volume-slider {
+        width: 40px;
+    }
+
+    /* Export Section Mobile */
+    .export-panel {
+        max-width: none;
+    }
+
+    .export-panel h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .export-presets {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .preset-card {
+        padding: 16px;
+        font-size: 12px;
+    }
+
+    .preset-icon {
+        width: 36px;
+        height: 36px;
+        margin: 0 auto 8px;
+    }
+
     .export-settings {
         grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .setting-group label {
+        font-size: 12px;
+    }
+
+    .setting-group select {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+    .btn-export {
+        padding: 14px;
+        font-size: 14px;
+        margin-bottom: 16px;
+    }
+
+    /* Settings Section Mobile */
+    .settings-panel {
+        max-width: none;
+    }
+
+    .settings-panel h2 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+
+    .setting-card {
+        padding: 16px;
+        margin-bottom: 16px;
+    }
+
+    .setting-card h3 {
+        margin-bottom: 16px;
+        font-size: 16px;
+    }
+
+    .setting-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .setting-row select {
+        width: 100%;
+        min-width: auto;
+    }
+
+    .invite-form {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .btn-invite {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    /* Notification Mobile */
+    .notification-toast {
+        right: 12px;
+        left: 12px;
+        bottom: 12px;
+        min-width: auto;
+        max-width: none;
+        padding: 12px 16px;
+    }
+
+    .notification-content {
+        gap: 12px;
+    }
+
+    .notification-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 14px;
+    }
+
+    .notification-text {
+        font-size: 13px;
+    }
+
+    .notification-subtext {
+        font-size: 11px;
+    }
+
+    /* Control Panel Mobile */
+    .control-panel {
+        width: 95%;
+        max-width: none;
+        max-height: 90vh;
+        margin: 20px auto;
+    }
+
+    .control-header {
+        padding: 12px 16px;
+    }
+
+    .control-header h3 {
+        font-size: 16px;
+    }
+
+    .control-content {
+        padding: 16px;
+        max-height: 70vh;
+    }
+
+    .control-group {
+        margin-bottom: 16px;
+    }
+
+    .control-group label {
+        font-size: 12px;
+        margin-bottom: 6px;
+    }
+
+    .control-group input[type="range"] {
+        height: 8px;
+        margin-bottom: 6px;
+    }
+
+    .control-group span {
+        font-size: 11px;
+        padding: 3px 6px;
+    }
+
+    .control-buttons {
+        flex-direction: column;
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .control-buttons button {
+        padding: 10px 14px;
+        font-size: 13px;
+    }
+
+    /* Audio Tools Mobile */
+    .equalizer {
+        gap: 8px;
+        justify-content: space-around;
+    }
+
+    .eq-slider {
+        height: 80px;
+        width: 16px;
+    }
+
+    .eq-band label {
+        font-size: 10px;
+    }
+
+    .btn-normalize,
+    .btn-noise-reduction {
+        padding: 8px 12px;
+        font-size: 12px;
+    }
+}
+
+/* Extra small screens */
+@media (max-width: 480px) {
+    .nav-tab {
+        padding: 4px 6px;
+        font-size: 10px;
+    }
+
+    .media-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .effects-grid,
+    .transitions-grid,
+    .filters-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .text-tools,
+    .advanced-tools {
+        grid-template-columns: 1fr;
+    }
+
+    .stickers-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .export-presets {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-controls {
+        gap: 8px;
+    }
+
+    .track-header {
+        width: 60px;
+        font-size: 10px;
+    }
+
+    .playhead {
+        left: 60px;
     }
 }
 
